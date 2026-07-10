@@ -1,0 +1,69 @@
+.title-bar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding-left: 1rem;
+  background: transparent;
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+.title-bar__brand {
+  color: var(--color-text-secondary);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title-bar__spacer {
+  min-width: 0;
+  min-height: 100%;
+}
+
+.title-bar__controls {
+  display: inline-grid;
+  grid-auto-flow: column;
+  -webkit-app-region: no-drag;
+}
+
+.title-bar__control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.title-bar__control:disabled {
+  cursor: default;
+}
+
+.title-bar__control-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  pointer-events: none;
+}
+
+.title-bar__control:hover,
+.title-bar__control:focus-visible {
+  background: var(--surface-interactive-hover);
+  outline: none;
+}
+
+.title-bar__control--close:hover,
+.title-bar__control--close:focus-visible {
+  background: var(--color-danger-surface);
+  color: var(--color-danger-text);
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "main-capability",
+  "description": "Default desktop permissions for the main Sedah window.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-close",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-start-dragging"
+  ]
+}

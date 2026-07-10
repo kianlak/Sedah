@@ -1,0 +1,39 @@
+.landing-page {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-items: center;
+  min-height: 100%;
+  padding: 2.25rem 2rem 2rem;
+}
+
+.landing-page__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(21rem, 29rem);
+  align-items: start;
+  gap: 3rem;
+  width: min(100%, 78rem);
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .landing-page {
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .landing-page__layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .landing-page__hero {
+    max-width: none;
+    padding: 0.5rem 0 0;
+  }
+
+  .landing-card {
+    justify-self: stretch;
+    width: 100%;
+  }
+}

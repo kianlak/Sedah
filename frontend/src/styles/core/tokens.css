@@ -1,0 +1,17 @@
+:root {
+  --color-surface-primary: #000000;
+  --color-surface-secondary: #090b10;
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: rgba(245, 245, 245, 0.72);
+  --surface-overlay-bg: rgba(14, 17, 24, 0.54);
+  --surface-overlay-border: rgba(255, 255, 255, 0.08);
+  --surface-overlay-blur: 24px;
+  --surface-interactive-hover: rgba(255, 255, 255, 0.08);
+  --shadow-surface-soft: 0 10px 30px rgba(0, 0, 0, 0.22);
+  --color-danger-surface: rgba(225, 55, 55, 0.92);
+  --color-danger-text: #ffffff;
+  --shell-background-gradient: linear-gradient(160deg, #090b10, #000000 70%);
+  --ambient-field-dot-color: rgba(255, 255, 255, 0.92);
+  --ambient-field-opacity: 0.42;
+  --font-family-ui: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}

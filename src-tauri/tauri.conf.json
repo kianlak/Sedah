@@ -1,0 +1,38 @@
+{
+  "$schema": "./gen/schemas/desktop-schema.json",
+  "productName": "Sedah",
+  "version": "0.1.0",
+  "identifier": "com.sedah.desktop",
+  "build": {
+    "beforeDevCommand": "npm.cmd run dev:web",
+    "beforeBuildCommand": "npm.cmd run build:web",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../frontend/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Sedah",
+        "width": 1440,
+        "height": 920,
+        "minWidth": 1120,
+        "minHeight": 760,
+        "center": true,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.ico"
+    ]
+  }
+}

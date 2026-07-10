@@ -1,0 +1,23 @@
+.shell-screen {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--shell-background-gradient);
+  position: relative;
+  height: calc(100% + 1px);
+  min-height: calc(100% + 1px);
+  overflow: hidden;
+}
+
+.shell-content {
+  display: grid;
+  min-height: 0;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.landing-page-shell {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+}

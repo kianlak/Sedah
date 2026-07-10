@@ -1,0 +1,116 @@
+.landing-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.landing-form__field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.landing-form__field > span {
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.landing-form__field input {
+  min-height: 3.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.95rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    rgba(8, 10, 16, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  color: var(--color-text-primary);
+  font: inherit;
+  padding: 0 1rem;
+  outline: none;
+}
+
+.landing-form__field input::placeholder {
+  color: rgba(245, 245, 245, 0.4);
+}
+
+.landing-form__field input:focus {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+    rgba(11, 14, 22, 0.44);
+}
+
+.landing-card__google,
+.landing-form__submit {
+  width: 100%;
+  border: 0;
+  border-radius: 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.landing-card__google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 3.2rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.72));
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  color: #10131a;
+  font-weight: 600;
+}
+
+.landing-card__google-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1a56db;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.landing-form__submit {
+  display: grid;
+  place-items: center;
+  min-height: 3.35rem;
+  margin-top: 0.15rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  color: var(--color-text-primary);
+  font-weight: 650;
+}
+
+.landing-form__submit-text {
+  grid-area: 1 / 1;
+  transition: opacity 220ms ease;
+}
+
+.landing-form__submit[data-mode="login"] .landing-form__submit-text--signup,
+.landing-form__submit[data-mode="signup"] .landing-form__submit-text--login {
+  opacity: 0;
+}
+
+.landing-card__google:hover,
+.landing-card__google:focus-visible,
+.landing-form__submit:hover,
+.landing-form__submit:focus-visible,
+.landing-card__switch-button:hover,
+.landing-card__switch-button:focus-visible,
+.landing-card__secondary-action:hover,
+.landing-card__secondary-action:focus-visible,
+.landing-card__tertiary-action:hover,
+.landing-card__tertiary-action:focus-visible {
+  outline: none;
+  filter: brightness(1.04);
+}

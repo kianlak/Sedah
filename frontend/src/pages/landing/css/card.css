@@ -1,0 +1,167 @@
+.landing-card {
+  --landing-body-duration: 680ms;
+  --landing-layout-duration: 680ms;
+  --landing-layout-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --landing-layout-expand-delay: 0ms;
+  justify-self: end;
+  width: min(100%, 29rem);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.018)),
+    color-mix(in srgb, var(--surface-overlay-bg) 56%, transparent);
+  border: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.16) 52%, var(--surface-overlay-border));
+  border-radius: 1.65rem;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(var(--surface-overlay-blur));
+  -webkit-backdrop-filter: blur(var(--surface-overlay-blur));
+  overflow: hidden;
+  transition: box-shadow 260ms ease;
+}
+
+.landing-card__switch {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem;
+  padding: 0.75rem 0.75rem 0.4rem;
+}
+
+.landing-card__switch-button {
+  height: 2.8rem;
+  border: 1px solid transparent;
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.014);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.landing-card__switch-button[data-active="true"] {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+.landing-card__body {
+  padding: 1.45rem 1.45rem 1.45rem;
+}
+
+.landing-card__content {
+  display: grid;
+  gap: 0;
+}
+
+.landing-card__lead-stack {
+  display: grid;
+  margin: 0 0 1rem;
+}
+
+.landing-card__lead {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.96rem;
+  line-height: 1.5;
+  transition: opacity 220ms ease;
+}
+
+.landing-card__lead-stack[data-mode="login"] .landing-card__lead--signup,
+.landing-card__lead-stack[data-mode="signup"] .landing-card__lead--login {
+  opacity: 0;
+}
+
+.landing-card__lead-stack[data-mode="login"] .landing-card__lead--login,
+.landing-card__lead-stack[data-mode="signup"] .landing-card__lead--signup {
+  opacity: 1;
+}
+
+.landing-card__mode-copy {
+  display: grid;
+  margin-bottom: 1rem;
+}
+
+.landing-card__mode-copy-text {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  transition: opacity 220ms ease;
+}
+
+.landing-card__mode-copy[data-mode="login"] .landing-card__mode-copy-text--signup,
+.landing-card__mode-copy[data-mode="signup"] .landing-card__mode-copy-text--login {
+  opacity: 0;
+}
+
+.landing-card__mode-copy[data-mode="login"] .landing-card__mode-copy-text--login,
+.landing-card__mode-copy[data-mode="signup"] .landing-card__mode-copy-text--signup {
+  opacity: 1;
+}
+
+.landing-card__signup-section {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 1;
+  margin-bottom: 0;
+  pointer-events: none;
+  transition:
+    grid-template-rows var(--landing-layout-duration) var(--landing-layout-easing),
+    margin-bottom var(--landing-layout-duration) var(--landing-layout-easing);
+}
+
+.landing-card__signup-section[data-expanded="true"] {
+  grid-template-rows: 1fr;
+  margin-bottom: 0;
+  pointer-events: auto;
+}
+
+.landing-card__signup-section-inner {
+  overflow: hidden;
+  transition:
+    opacity 220ms ease;
+}
+
+.landing-card__signup-section:not([data-expanded="true"]) .landing-card__signup-section-inner {
+  opacity: 0;
+}
+
+.landing-card__signup-section[data-expanded="true"] .landing-card__signup-section-inner {
+  opacity: 1;
+}
+
+.landing-card__divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  margin: 1.15rem 0;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.landing-card__divider::before,
+.landing-card__divider::after {
+  content: "";
+  height: 1px;
+  background: color-mix(in srgb, var(--surface-overlay-border) 100%, transparent);
+}
+
+.landing-card__status {
+  margin: 1rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.landing-card__status-text {
+  transition: opacity 220ms ease;
+}
+
+.landing-card__status[data-tone="warning"] {
+  color: rgba(255, 190, 150, 0.95);
+}
