@@ -11,7 +11,9 @@ import type { LandingCardProps } from "./interfaces/landingCardProps";
 export function LandingCard({ activeMode, onModeChange }: LandingCardProps): ReactElement {
   const {
     email,
+    emailError,
     feedback,
+    isEmailErrorVisible,
     setEmail,
     handleProviderAction,
     handleModeChange,
@@ -35,9 +37,11 @@ export function LandingCard({ activeMode, onModeChange }: LandingCardProps): Rea
       <div className="landing-card__body">
         <div className="landing-card__content">
           <LandingCardPanel
+            emailError={emailError}
             feedback={feedback}
             handleEmailAction={handleEmailAction}
             handleProviderAction={handleProviderAction}
+            isEmailErrorVisible={isEmailErrorVisible}
             mode={activeMode}
             onEmailChange={setEmail}
             email={email}
@@ -51,19 +55,23 @@ export function LandingCard({ activeMode, onModeChange }: LandingCardProps): Rea
 interface LandingCardPanelProps {
   mode: LandingEntryMode;
   email: string;
+  emailError: string | null;
   feedback: LandingFeedback;
   onEmailChange: (value: string) => void;
   handleProviderAction: (provider: "google") => void;
   handleEmailAction: () => void;
+  isEmailErrorVisible: boolean;
 }
 
 function LandingCardPanel({
   mode,
   email,
+  emailError,
   feedback,
   onEmailChange,
   handleProviderAction,
-  handleEmailAction
+  handleEmailAction,
+  isEmailErrorVisible
 }: LandingCardPanelProps): ReactElement | null {
   return (
     <>
@@ -114,6 +122,8 @@ function LandingCardPanel({
 
       <LandingEmailForm
         email={email}
+        emailError={emailError}
+        isEmailErrorVisible={isEmailErrorVisible}
         mode={mode}
         onEmailChange={onEmailChange}
         onSubmit={handleEmailAction}

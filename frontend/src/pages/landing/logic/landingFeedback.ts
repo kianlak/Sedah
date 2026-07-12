@@ -10,13 +10,6 @@ export function buildLandingGoogleFeedback(submission: LandingSubmission): Landi
 }
 
 export function buildLandingEmailFeedback(submission: LandingSubmission): LandingFeedback {
-  if (!submission.email) {
-    return {
-      tone: "warning",
-      message: "Enter your email before continuing."
-    };
-  }
-
   if (submission.mode === "signup") {
     return {
       tone: "neutral",

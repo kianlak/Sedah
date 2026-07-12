@@ -3,22 +3,42 @@ import type { LandingEmailFormProps } from "./interfaces/landingEmailFormProps";
 
 export function LandingEmailForm({
   email,
+  emailError,
+  isEmailErrorVisible,
   mode,
   onEmailChange,
   onSubmit
 }: LandingEmailFormProps): ReactElement {
+  const emailErrorId = "landing-email-error";
+  const emailInputId = "landing-email-input";
+  const emailLabelId = "landing-email-label";
+
   return (
     <form
       className="landing-form"
+      noValidate
       onSubmit={(event) => {
         event.preventDefault();
         onSubmit();
       }}
     >
-      <label className="landing-form__field">
-        <span>Email</span>
+      <div
+        className="landing-form__field"
+        data-invalid={Boolean(emailError)}
+      >
+        <span
+          className="landing-form__label"
+          id={emailLabelId}
+        >
+          Email
+        </span>
         <input
+          aria-describedby={emailError ? emailErrorId : undefined}
+          aria-invalid={Boolean(emailError)}
+          aria-labelledby={emailLabelId}
           autoComplete="email"
+          id={emailInputId}
+          inputMode="email"
           onChange={(event) => {
             onEmailChange(event.target.value);
           }}
@@ -26,7 +46,17 @@ export function LandingEmailForm({
           type="email"
           value={email}
         />
-      </label>
+        {emailError ? (
+          <span
+            className="landing-form__error-bubble"
+            data-visible={isEmailErrorVisible}
+            id={emailErrorId}
+            role="alert"
+          >
+            {emailError}
+          </span>
+        ) : null}
+      </div>
 
       <button
         className="landing-form__submit"

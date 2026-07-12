@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { LandingEntryMode, LandingEntryProvider, LandingFeedback } from "../interfaces/landing";
 import { buildLandingEmailFeedback, buildLandingGoogleFeedback } from "../logic/landingFeedback";
+import { useLandingEmailValidation } from "./useLandingEmailValidation";
 
 const DEFAULT_FEEDBACK: LandingFeedback = {
   message: "",
@@ -14,7 +15,9 @@ interface UseLandingCardStateOptions {
 
 interface UseLandingCardStateResult {
   email: string;
+  emailError: string | null;
   feedback: LandingFeedback;
+  isEmailErrorVisible: boolean;
   setEmail: (value: string) => void;
   handleProviderAction: (provider: LandingEntryProvider) => void;
   handleModeChange: (mode: LandingEntryMode) => void;
@@ -27,10 +30,23 @@ export function useLandingCardState({
 }: UseLandingCardStateOptions): UseLandingCardStateResult {
   const [email, setEmail] = useState("");
   const [feedback, setFeedback] = useState<LandingFeedback>(DEFAULT_FEEDBACK);
+  const {
+    emailError,
+    handleEmailInputChange,
+    isEmailErrorVisible,
+    resetEmailValidation,
+    validateEmail
+  } = useLandingEmailValidation();
 
   useEffect(() => {
+    resetEmailValidation();
     setFeedback(DEFAULT_FEEDBACK);
-  }, [activeMode]);
+  }, [activeMode, resetEmailValidation]);
+
+  const handleEmailValueChange = (value: string): void => {
+    setEmail(value);
+    handleEmailInputChange();
+  };
 
   const handleProviderAction = (provider: LandingEntryProvider): void => {
     const submission = {
@@ -47,6 +63,10 @@ export function useLandingCardState({
   };
 
   const handleEmailAction = (): void => {
+    if (!validateEmail(email)) {
+      return;
+    }
+
     const submission = {
       mode: activeMode,
       provider: "email" as const,
@@ -63,8 +83,10 @@ export function useLandingCardState({
 
   return {
     email,
+    emailError,
     feedback,
-    setEmail,
+    isEmailErrorVisible,
+    setEmail: handleEmailValueChange,
     handleProviderAction,
     handleModeChange,
     handleEmailAction
