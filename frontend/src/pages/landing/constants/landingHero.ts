@@ -1,5 +1,7 @@
-import type { LandingEntryMode } from "../../../../interfaces/landing";
-import type { LandingHeroContent } from "../interfaces/landingHeroContent";
+import type { LandingEntryMode } from "../interfaces/landing";
+import type { LandingHeroContent } from "../ui/components/landing-hero/interfaces/landingHeroContent";
+
+export const LANDING_HERO_FADE_DURATION_MS = 420;
 
 export const LANDING_HERO_CONTENT_BY_MODE: Record<LandingEntryMode, LandingHeroContent> = {
   login: {

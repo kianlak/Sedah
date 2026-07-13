@@ -1,3 +1,4 @@
 export interface LandingGoogleButtonProps {
-  onClick: () => void;
+  isDisabled: boolean;
+  onClick: () => Promise<void>;
 }

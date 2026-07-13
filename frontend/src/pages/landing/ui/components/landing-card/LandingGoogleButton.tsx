@@ -1,11 +1,15 @@
-import type { ReactElement } from "react";
+import type { MouseEvent, ReactElement } from "react";
 import type { LandingGoogleButtonProps } from "./interfaces/landingGoogleButtonProps";
 
-export function LandingGoogleButton({ onClick }: LandingGoogleButtonProps): ReactElement {
+export function LandingGoogleButton({ isDisabled, onClick }: LandingGoogleButtonProps): ReactElement {
   return (
     <button
       className="landing-card__google"
-      onClick={onClick}
+      disabled={isDisabled}
+      onClick={(event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        void onClick();
+      }}
       type="button"
     >
       <span

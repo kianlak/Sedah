@@ -1,8 +1,6 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_API_GATEWAY_TIMEOUT_MS?: string;
-  readonly VITE_API_GATEWAY_URL?: string;
 }
 
 interface ImportMeta {

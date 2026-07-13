@@ -1,10 +1,11 @@
 import { useEffect, useState, type ReactElement } from "react";
+import {
+  LANDING_HERO_CONTENT_BY_MODE,
+  LANDING_HERO_FADE_DURATION_MS
+} from "../../../constants/landingHero";
 import type { LandingEntryMode } from "../../../interfaces/landing";
 import "../../../css/hero.css";
-import { LANDING_HERO_CONTENT_BY_MODE } from "./config/landingHeroContentByMode";
 import type { LandingHeroProps } from "./interfaces/landingHeroProps";
-
-const HERO_FADE_DURATION_MS = 420;
 
 export function LandingHero({ activeMode }: LandingHeroProps): ReactElement {
   const [displayMode, setDisplayMode] = useState<LandingEntryMode>(activeMode);
@@ -21,7 +22,7 @@ export function LandingHero({ activeMode }: LandingHeroProps): ReactElement {
     const timeoutHandle = window.setTimeout(() => {
       setDisplayMode(activeMode);
       setIsVisible(true);
-    }, HERO_FADE_DURATION_MS);
+    }, LANDING_HERO_FADE_DURATION_MS);
 
     return () => {
       window.clearTimeout(timeoutHandle);

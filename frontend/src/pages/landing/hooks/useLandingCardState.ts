@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import type { LandingEntryMode, LandingEntryProvider, LandingFeedback } from "../interfaces/landing";
-import { buildLandingEmailFeedback, buildLandingGoogleFeedback } from "../logic/landingFeedback";
+import { DEFAULT_LANDING_FEEDBACK } from "../constants/landingFeedback";
+import type { LandingEntryMode, LandingFeedback } from "../interfaces/landing";
+import { authService } from "../../../domain/auth/authService";
 import { useLandingEmailValidation } from "./useLandingEmailValidation";
-
-const DEFAULT_FEEDBACK: LandingFeedback = {
-  message: "",
-  tone: "neutral"
-};
 
 interface UseLandingCardStateOptions {
   activeMode: LandingEntryMode;
@@ -17,11 +13,12 @@ interface UseLandingCardStateResult {
   email: string;
   emailError: string | null;
   feedback: LandingFeedback;
+  isAuthActionPending: boolean;
   isEmailErrorVisible: boolean;
-  setEmail: (value: string) => void;
-  handleProviderAction: (provider: LandingEntryProvider) => void;
-  handleModeChange: (mode: LandingEntryMode) => void;
-  handleEmailAction: () => void;
+  beginGoogleAuth: () => Promise<void>;
+  changeMode: (mode: LandingEntryMode) => void;
+  requestEmailAuth: () => Promise<void>;
+  updateEmail: (value: string) => void;
 }
 
 export function useLandingCardState({
@@ -29,7 +26,8 @@ export function useLandingCardState({
   onModeChange
 }: UseLandingCardStateOptions): UseLandingCardStateResult {
   const [email, setEmail] = useState("");
-  const [feedback, setFeedback] = useState<LandingFeedback>(DEFAULT_FEEDBACK);
+  const [feedback, setFeedback] = useState<LandingFeedback>(DEFAULT_LANDING_FEEDBACK);
+  const [isAuthActionPending, setIsAuthActionPending] = useState(false);
   const {
     emailError,
     handleEmailInputChange,
@@ -40,55 +38,62 @@ export function useLandingCardState({
 
   useEffect(() => {
     resetEmailValidation();
-    setFeedback(DEFAULT_FEEDBACK);
+    setFeedback(DEFAULT_LANDING_FEEDBACK);
   }, [activeMode, resetEmailValidation]);
 
-  const handleEmailValueChange = (value: string): void => {
+  const updateEmail = (value: string): void => {
     setEmail(value);
     handleEmailInputChange();
   };
 
-  const handleProviderAction = (provider: LandingEntryProvider): void => {
-    const submission = {
-      mode: activeMode,
-      provider,
-      email: email.trim()
-    };
+  const beginGoogleAuth = async (): Promise<void> => {
+    setIsAuthActionPending(true);
 
-    setFeedback(provider === "google" ? buildLandingGoogleFeedback(submission) : buildLandingEmailFeedback(submission));
+    try {
+      const result = await authService.beginProviderAuth({
+        email: email.trim(),
+        mode: activeMode,
+        provider: "google"
+      });
+
+      setFeedback(result);
+    } finally {
+      setIsAuthActionPending(false);
+    }
   };
 
-  const handleModeChange = (mode: LandingEntryMode): void => {
+  const changeMode = (mode: LandingEntryMode): void => {
     onModeChange(mode);
   };
 
-  const handleEmailAction = (): void => {
+  const requestEmailAuth = async (): Promise<void> => {
     if (!validateEmail(email)) {
       return;
     }
 
-    const submission = {
-      mode: activeMode,
-      provider: "email" as const,
-      email: email.trim()
-    };
-    const nextFeedback = buildLandingEmailFeedback(submission);
+    setIsAuthActionPending(true);
 
-    setFeedback(nextFeedback);
+    try {
+      const result = await authService.beginEmailAuth({
+        email: email.trim(),
+        mode: activeMode
+      });
 
-    if (nextFeedback.tone === "warning") {
-      return;
+      setFeedback(result);
+    } finally {
+      setIsAuthActionPending(false);
     }
   };
 
   return {
+    beginGoogleAuth,
+    changeMode,
     email,
     emailError,
     feedback,
+    isAuthActionPending,
     isEmailErrorVisible,
-    setEmail: handleEmailValueChange,
-    handleProviderAction,
-    handleModeChange,
-    handleEmailAction
+    requestEmailAuth,
+    updateEmail
   };
 }

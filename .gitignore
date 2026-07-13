@@ -10,6 +10,7 @@ node_modules/
 frontend/dist/
 frontend/.vite/
 src-tauri/target/
+server/target/
 *.tsbuildinfo
 *.log
 npm-debug.log*

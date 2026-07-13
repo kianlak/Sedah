@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "frontend",
+  envDir: "..",
   clearScreen: false,
   server: {
     port: 1420,

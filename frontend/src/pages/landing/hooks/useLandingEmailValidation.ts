@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  EMAIL_ERROR_DISPLAY_MS,
+  EMAIL_ERROR_EXIT_MS
+} from "../constants/landingEmailValidation";
 import { validateLandingEmail } from "../logic/validateLandingEmail";
-
-const EMAIL_ERROR_DISPLAY_MS = 2400;
-const EMAIL_ERROR_EXIT_MS = 180;
 
 interface UseLandingEmailValidationResult {
   emailError: string | null;
@@ -19,7 +20,7 @@ export function useLandingEmailValidation(): UseLandingEmailValidationResult {
   const hideEmailErrorTimeoutReference = useRef<number | null>(null);
   const clearEmailErrorTimeoutReference = useRef<number | null>(null);
 
-  const clearEmailErrorTimers = (): void => {
+  const clearEmailErrorTimers = useCallback((): void => {
     if (showEmailErrorFrameReference.current !== null) {
       window.cancelAnimationFrame(showEmailErrorFrameReference.current);
       showEmailErrorFrameReference.current = null;
@@ -34,9 +35,9 @@ export function useLandingEmailValidation(): UseLandingEmailValidationResult {
       window.clearTimeout(clearEmailErrorTimeoutReference.current);
       clearEmailErrorTimeoutReference.current = null;
     }
-  };
+  }, []);
 
-  const dismissEmailError = (): void => {
+  const dismissEmailError = useCallback((): void => {
     clearEmailErrorTimers();
 
     if (emailError === null) {
@@ -48,9 +49,9 @@ export function useLandingEmailValidation(): UseLandingEmailValidationResult {
       clearEmailErrorTimeoutReference.current = null;
       setEmailError(null);
     }, EMAIL_ERROR_EXIT_MS);
-  };
+  }, [clearEmailErrorTimers, emailError]);
 
-  const showEmailError = (message: string): void => {
+  const showEmailError = useCallback((message: string): void => {
     clearEmailErrorTimers();
     setEmailError(message);
     setIsEmailErrorVisible(false);
@@ -62,7 +63,7 @@ export function useLandingEmailValidation(): UseLandingEmailValidationResult {
         dismissEmailError();
       }, EMAIL_ERROR_DISPLAY_MS);
     });
-  };
+  }, [clearEmailErrorTimers, dismissEmailError]);
 
   useEffect(() => {
     return () => {
@@ -70,13 +71,13 @@ export function useLandingEmailValidation(): UseLandingEmailValidationResult {
     };
   }, []);
 
-  const handleEmailInputChange = (): void => {
+  const handleEmailInputChange = useCallback((): void => {
     if (emailError !== null || isEmailErrorVisible) {
       dismissEmailError();
     }
-  };
+  }, [dismissEmailError, emailError, isEmailErrorVisible]);
 
-  const validateEmail = (email: string): boolean => {
+  const validateEmail = useCallback((email: string): boolean => {
     const nextEmailError = validateLandingEmail(email);
 
     if (nextEmailError) {
@@ -86,13 +87,13 @@ export function useLandingEmailValidation(): UseLandingEmailValidationResult {
 
     dismissEmailError();
     return true;
-  };
+  }, [dismissEmailError, showEmailError]);
 
-  const resetEmailValidation = (): void => {
+  const resetEmailValidation = useCallback((): void => {
     setEmailError(null);
     setIsEmailErrorVisible(false);
     clearEmailErrorTimers();
-  };
+  }, [clearEmailErrorTimers]);
 
   return {
     emailError,

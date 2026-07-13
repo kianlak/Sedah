@@ -1,20 +1,11 @@
 # Server
 
-This folder is for the gateway and remotely deployed service code.
+This folder is intentionally being reset while the backend architecture is redesigned.
 
-Examples:
+Current state:
 
-- API gateway and edge routing
-- authorization and identity services
-- account and profile APIs
-- catalog and metadata services
-- recommendation and search services
-- background workers and async processing
+- the frontend runs without a gateway or microservices
+- authentication is UI-only stub behavior
+- no network-facing backend contract is active right now
 
-Suggested structure:
-
-- `gateway/` for the API gateway boundary
-- `services/auth/` for authentication and identity
-- `services/...` for other domain services
-
-The desktop host should call into these services through explicit gateway clients instead of embedding that behavior into the Tauri shell.
+When the redesign starts, this folder should be rebuilt from a clean plan instead of extending the previous gateway scaffold.

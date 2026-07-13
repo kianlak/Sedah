@@ -114,6 +114,12 @@
   cursor: pointer;
 }
 
+.landing-card__google:disabled,
+.landing-form__submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .landing-card__google {
   display: inline-flex;
   align-items: center;
@@ -178,4 +184,11 @@
 .landing-card__tertiary-action:focus-visible {
   outline: none;
   filter: brightness(1.04);
+}
+
+.landing-card__google:disabled:hover,
+.landing-card__google:disabled:focus-visible,
+.landing-form__submit:disabled:hover,
+.landing-form__submit:disabled:focus-visible {
+  filter: none;
 }

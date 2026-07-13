@@ -10,14 +10,15 @@ import type { LandingCardProps } from "./interfaces/landingCardProps";
 
 export function LandingCard({ activeMode, onModeChange }: LandingCardProps): ReactElement {
   const {
+    beginGoogleAuth,
+    changeMode,
     email,
     emailError,
     feedback,
+    isAuthActionPending,
     isEmailErrorVisible,
-    setEmail,
-    handleProviderAction,
-    handleModeChange,
-    handleEmailAction
+    requestEmailAuth,
+    updateEmail
   } = useLandingCardState({
     activeMode,
     onModeChange
@@ -31,19 +32,20 @@ export function LandingCard({ activeMode, onModeChange }: LandingCardProps): Rea
     >
       <LandingModeSwitch
         activeMode={activeMode}
-        onModeChange={handleModeChange}
+        onModeChange={changeMode}
       />
 
       <div className="landing-card__body">
         <div className="landing-card__content">
           <LandingCardPanel
+            beginGoogleAuth={beginGoogleAuth}
             emailError={emailError}
             feedback={feedback}
-            handleEmailAction={handleEmailAction}
-            handleProviderAction={handleProviderAction}
+            isAuthActionPending={isAuthActionPending}
             isEmailErrorVisible={isEmailErrorVisible}
             mode={activeMode}
-            onEmailChange={setEmail}
+            onEmailChange={updateEmail}
+            requestEmailAuth={requestEmailAuth}
             email={email}
           />
         </div>
@@ -53,25 +55,27 @@ export function LandingCard({ activeMode, onModeChange }: LandingCardProps): Rea
 }
 
 interface LandingCardPanelProps {
+  beginGoogleAuth: () => Promise<void>;
   mode: LandingEntryMode;
   email: string;
   emailError: string | null;
   feedback: LandingFeedback;
+  isAuthActionPending: boolean;
   onEmailChange: (value: string) => void;
-  handleProviderAction: (provider: "google") => void;
-  handleEmailAction: () => void;
   isEmailErrorVisible: boolean;
+  requestEmailAuth: () => Promise<void>;
 }
 
 function LandingCardPanel({
+  beginGoogleAuth,
   mode,
   email,
   emailError,
   feedback,
+  isAuthActionPending,
   onEmailChange,
-  handleProviderAction,
-  handleEmailAction,
-  isEmailErrorVisible
+  isEmailErrorVisible,
+  requestEmailAuth
 }: LandingCardPanelProps): ReactElement | null {
   return (
     <>
@@ -94,9 +98,8 @@ function LandingCardPanel({
       >
         <div className="landing-card__signup-section-inner">
           <LandingGoogleButton
-            onClick={() => {
-              handleProviderAction("google");
-            }}
+            isDisabled={isAuthActionPending}
+            onClick={beginGoogleAuth}
           />
 
           <div
@@ -123,10 +126,11 @@ function LandingCardPanel({
       <LandingEmailForm
         email={email}
         emailError={emailError}
+        isDisabled={isAuthActionPending}
         isEmailErrorVisible={isEmailErrorVisible}
         mode={mode}
         onEmailChange={onEmailChange}
-        onSubmit={handleEmailAction}
+        onSubmit={requestEmailAuth}
       />
 
       <p

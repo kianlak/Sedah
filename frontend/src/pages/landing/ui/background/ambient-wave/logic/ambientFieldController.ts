@@ -1,5 +1,5 @@
 import type { AmbientFieldConfig } from "../interfaces/ambientField";
-import { AMBIENT_FIELD_PROFILE } from "../config/ambientFieldProfile";
+import { AMBIENT_FIELD_PROFILE } from "../constants/ambientFieldProfile";
 import {
   AMBIENT_FIELD_DOT_COLOR_CSS_VARIABLE,
   AMBIENT_FIELD_OPACITY_CSS_VARIABLE

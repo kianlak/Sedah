@@ -4,6 +4,7 @@ import type { LandingEmailFormProps } from "./interfaces/landingEmailFormProps";
 export function LandingEmailForm({
   email,
   emailError,
+  isDisabled,
   isEmailErrorVisible,
   mode,
   onEmailChange,
@@ -19,7 +20,7 @@ export function LandingEmailForm({
       noValidate
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit();
+        void onSubmit();
       }}
     >
       <div
@@ -37,6 +38,7 @@ export function LandingEmailForm({
           aria-invalid={Boolean(emailError)}
           aria-labelledby={emailLabelId}
           autoComplete="email"
+          disabled={isDisabled}
           id={emailInputId}
           inputMode="email"
           onChange={(event) => {
@@ -61,6 +63,7 @@ export function LandingEmailForm({
       <button
         className="landing-form__submit"
         data-mode={mode}
+        disabled={isDisabled}
         type="submit"
       >
         <span className="landing-form__submit-text landing-form__submit-text--login">
